@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="pastebin"
+    />
+    <title>pastebin</title>
+    <link rel="stylesheet" href="./static/bulma.min.css">
+  </head>
+  <body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          pastebin
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/uploads">
+            uploads
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="columns">
+      <div class="column is-half">
+        <section class="section">
+          <div class="container">
+            {{if .Paste}}
+              <div class="block">
+                <pre>{{.Paste}}</pre>
+              </div>
+            {{end}}
+            <form action="/paste/" method="POST">
+              <div class="field">
+                <div class="control">
+                  <textarea id="paste" name="paste" class="textarea" placeholder="Paste" rows="10"></textarea>
+                </div>
+              </div>
+              <div class="field">
+                <div class="block control">
+                  <button type="submit" class="button is-dark">Overwrite</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+
+      <div class="column is-half">
+        <section class="section">
+          <div class="container">
+            <div class="block">
+              <form enctype="multipart/form-data" action="/uploads/" method="POST">
+                <div class="field file has-name is-light" id="userfile">
+                  <label class="file-label">
+                    <input class="file-input" type="file" name="userfile">
+                    <span class="file-cta">
+                      <span class="file-label">
+                        Browse file…
+                      </span>
+                    </span>
+                    <span class="file-name">example.jpg</span>
+                  </label>
+                </div>
+                <div class="field">
+                  <button class="button is-dark" type="submit">Upload</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      const fileInput = document.querySelector('#userfile input[type=file]');
+      fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+          const fileName = document.querySelector('#userfile .file-name');
+          fileName.textContent = fileInput.files[0].name;
+        }
+      };
+    </script>
+  </body>
+</html>

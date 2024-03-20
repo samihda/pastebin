@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export PASTEBIN_ROOT=.
+go run main.go
