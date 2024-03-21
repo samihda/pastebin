@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"strings"
 	"syscall"
+	"time"
 )
 
 //go:embed index.tmpl
@@ -125,8 +126,10 @@ func main() {
 		}
 	})
 	srv := &http.Server{
-		Addr:    ":8000",
-		Handler: mux,
+		Addr:         ":8000",
+		Handler:      mux,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
 	}
 
 	go func() {
