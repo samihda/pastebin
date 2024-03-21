@@ -21,7 +21,7 @@ var tpl string
 const (
 	rootVarName   = "PASTEBIN_ROOT"
 	pasteFile     = "bin.txt"
-	maxUploadSize = 10 * 1024 * 1024 // 10 MB
+	maxUploadSize = 50 * 1024 * 1024
 )
 
 func main() {
