@@ -61,8 +61,9 @@ func main() {
 
 		defer file.Close()
 
-		dst, err := os.Create(fmt.Sprintf(
-			"./uploads/%s",
+		dst, err := os.Create(filepath.Join(
+			rootDir,
+			"uploads/",
 			fileHeader.Filename,
 		))
 		if err != nil {
