@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	_ "embed"
+	"errors"
 	"fmt"
 	"html/template"
 	"io"
@@ -99,7 +100,17 @@ func main() {
 			return
 		}
 
-		err := os.WriteFile(pasteFileAbs, []byte(t), 0600)
+		f, err := os.OpenFile(
+			pasteFileAbs, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600,
+		)
+		if err != nil {
+			log.Printf("paste file open failed: %v", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		defer f.Close()
+
+		_, err = f.Write([]byte(t))
 		if err != nil {
 			log.Printf("paste file writing failed: %v", err)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -113,9 +124,12 @@ func main() {
 			return
 		}
 
-		paste, err := os.ReadFile(pasteFileAbs)
+		var paste []byte
+		paste, err = os.ReadFile(pasteFileAbs)
 		if err != nil {
-			log.Fatal(err)
+			if !errors.Is(err, os.ErrNotExist) {
+				log.Fatal(err)
+			}
 		}
 
 		err = t.ExecuteTemplate(w, "index", struct{ Paste string }{string(paste)})
