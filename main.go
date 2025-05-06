@@ -37,6 +37,12 @@ func main() {
 		log.Fatalf("environment variable %s should be set", rootVarName)
 	}
 
+	uploadsDirAbs := filepath.Join(rootDir, "uploads/")
+	err = os.MkdirAll(uploadsDirAbs, 0750)
+	if err != nil {
+		log.Fatalf("upload dir creation failed: %v", err)
+	}
+
 	pasteFileAbs := filepath.Join(rootDir, pasteFile)
 
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
@@ -63,8 +69,7 @@ func main() {
 		defer file.Close()
 
 		dst, err := os.Create(filepath.Join(
-			rootDir,
-			"uploads/",
+			uploadsDirAbs,
 			fileHeader.Filename,
 		))
 		if err != nil {
