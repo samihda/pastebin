@@ -11,6 +11,5 @@ ENV PORT=8000
 EXPOSE $PORT
 
 COPY --from=builder /app/pastebin .
-COPY --from=builder /app/static ./static
 
 CMD [ "./pastebin" ]
