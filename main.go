@@ -43,7 +43,10 @@ func main() {
 		log.Fatalf("upload dir creation failed: %v", err)
 	}
 
+	log.Printf("using %s as uploads dir\n", uploadsDirAbs)
+
 	pasteFileAbs := filepath.Join(rootDir, pasteFile)
+	log.Printf("using %s as paste file\n", pasteFileAbs)
 
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
