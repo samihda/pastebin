@@ -33,4 +33,4 @@ jobs:
         run: |-
           DOCKER_TAG="${IMAGE_NAME}":${{ github.sha }}
           docker build --tag "$DOCKER_TAG" .
-          docker push "$REGISTRY"/${{ github.actor }}/"$DOCKER_TAG"
+          docker push "$REGISTRY"/"$DOCKER_TAG"
