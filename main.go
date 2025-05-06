@@ -44,7 +44,6 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.Handle("GET /static/", http.FileServer(http.Dir(rootDir)))
-	mux.Handle("GET /paste/", http.FileServer(http.Dir(rootDir)))
 	mux.Handle("GET /uploads/", http.FileServer(http.Dir(rootDir)))
 	mux.HandleFunc("POST /uploads/", func(w http.ResponseWriter, req *http.Request) {
 		req.Body = http.MaxBytesReader(w, req.Body, maxUploadSize)
