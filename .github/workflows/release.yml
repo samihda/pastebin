@@ -31,6 +31,6 @@ jobs:
 
       - name: Build and push Docker image
         run: |-
-          DOCKER_TAG="${IMAGE_NAME}":${{ github.sha }}
+          DOCKER_TAG="$REGISTRY/${IMAGE_NAME}":${{ github.sha }}
           docker build --tag "$DOCKER_TAG" .
-          docker push "$REGISTRY"/"$DOCKER_TAG"
+          docker push "$DOCKER_TAG"
