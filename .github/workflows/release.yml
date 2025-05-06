@@ -1,0 +1,36 @@
+# https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-docker-images
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |-
+          DOCKER_TAG="${IMAGE_NAME}":${{ github.sha }}
+          docker build --tag "$DOCKER_TAG" .
+          docker push "$REGISTRY"/${{ github.actor }}/"$DOCKER_TAG"
