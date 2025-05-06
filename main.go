@@ -100,7 +100,7 @@ func main() {
 			return
 		}
 
-		err := os.WriteFile(pasteFileAbs, []byte(t), 0600)
+		err := os.WriteFile(pasteFileAbs, []byte(t), 0644)
 		if err != nil {
 			log.Printf("paste file writing failed: %v", err)
 			w.WriteHeader(http.StatusInternalServerError)
