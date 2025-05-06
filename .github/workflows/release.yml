@@ -33,4 +33,4 @@ jobs:
           docker build --tag "$IMAGE_NAME":${{ github.sha }} --tag "$IMAGE_NAME":latest .
           docker push --all-tags "$IMAGE_NAME"
         env:
-          IMAGE_NAME: ${{ env.REGISTRY }}:${{ github.repository }}
+          IMAGE_NAME: ${{ env.REGISTRY }}/${{ github.repository }}
