@@ -52,6 +52,7 @@ func main() {
 	defer stop()
 
 	mux := http.NewServeMux()
+	mux.HandleFunc("GET /livez", func(w http.ResponseWriter, req *http.Request) {})
 	mux.Handle("GET /static/", http.FileServer(http.Dir(rootDir)))
 	mux.Handle("GET /uploads/", http.FileServer(http.Dir(rootDir)))
 	mux.HandleFunc("POST /uploads/", func(w http.ResponseWriter, req *http.Request) {
