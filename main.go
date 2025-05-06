@@ -100,17 +100,7 @@ func main() {
 			return
 		}
 
-		f, err := os.OpenFile(
-			pasteFileAbs, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600,
-		)
-		if err != nil {
-			log.Printf("paste file open failed: %v", err)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		defer f.Close()
-
-		_, err = f.Write([]byte(t))
+		err := os.WriteFile(pasteFileAbs, []byte(t), 0600)
 		if err != nil {
 			log.Printf("paste file writing failed: %v", err)
 			w.WriteHeader(http.StatusInternalServerError)
