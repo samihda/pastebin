@@ -15,10 +15,10 @@
   <body>
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="/">
+        <a class="navbar-item" href="./">
           pastebin
         </a>
-        <a class="navbar-item" href="/uploads">
+        <a class="navbar-item" href="./uploads">
           uploads
         </a>
       </div>
@@ -33,7 +33,7 @@
                 <pre>{{.Paste}}</pre>
               </div>
             {{end}}
-            <form action="/paste/" method="POST">
+            <form action="./paste/" method="POST">
               <div class="field">
                 <div class="control">
                   <textarea id="paste" name="paste" class="textarea" placeholder="Paste" rows="10"></textarea>
